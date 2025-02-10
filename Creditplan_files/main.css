@@ -401,7 +401,8 @@ main {
   border-radius   : 50%;
   border          : 2px solid white;
   background-color: #37393A;
-  background-image: url("/Creditplan_files/stars.png");
+  background-image: url("../Creditplan_files/stars.png");
+
   background-size: 45px;
   background-position: center;
   background-repeat: no-repeat;
