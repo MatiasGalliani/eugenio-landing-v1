@@ -413,3 +413,21 @@ main {
     border-color: #37393A !important;
   }
   
+.form {
+    height: fit-content !important;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 4px;
+}
+
+.select-provincia {
+  margin-bottom: 1rem;
+  margin-top: 0rem;
+}
