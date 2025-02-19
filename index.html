@@ -5,6 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Creditplan</title>
+  <link rel="icon" href="https://creditplan.it/wp-content/uploads/2023/04/cropped-Creditplan_fav-32x32.png" sizes="32x32">
 
   <!-- Hojas de estilo -->
   <link href="./Creditplan_files/bootstrap.min.css" rel="stylesheet"
@@ -13,14 +14,13 @@
     integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
     crossorigin="anonymous" referrerpolicy="no-referrer">
   <link rel="stylesheet" href="./Creditplan_files/main.css">
-  <link rel="icon" href="https://creditplan.it/wp-content/uploads/2023/04/cropped-Creditplan_fav-32x32.png" sizes="32x32">
 
   <!-- Se han eliminado todas las referencias a archivos y bloques de script -->
 
 </head>
 
 <body>
-  <form method="post" action="https://c03e-93-54-88-37.ngrok-free.app/webhook" id="commonForm">
+  <form method="post" action="http://64.227.125.9/webhook" id="commonForm">
     <div class="topbar-blu">
       <span>
         <strong>Creditplan</strong> - Italia Network di mediazione creditizia srl con sedi a Monza e Milano, opera in
@@ -512,8 +512,8 @@
             </div>
             <div class="mb-3">
               <label for="tipo" class="form-label">Richiedo preventivo o consulenza per</label>
-              <select class="form-select" aria-label="Default select example" id="tipo" name="tipo" required="">
-                <option selected="" disabled="">Richiedo preventivo o consulenza per</option>
+              <select class="form-select" aria-label="Default select example" id="tipo" name="tipo" required>
+                <option selected disabled>Richiedo preventivo o consulenza per</option>
                 <option>Mutuo acquisto</option>
                 <option>Mutuo ristrutturazione</option>
                 <option>Mutuo Liquidità</option>
@@ -524,6 +524,7 @@
                 <option>Assicurazioni</option>
                 <option>Altro</option>
               </select>
+              <p id="tipo-error" class="error-message">⚠️ Seleziona un'opzione prima di inviare il modulo.</p>
             </div>
             <div class="mb-5">
               <label for="richiesta" class="form-label">Descrivi brevemente la tua richiesta</label>
@@ -610,59 +611,44 @@
         </span>
       </div>
       <div class="footer-bottom">
-        © 2023 Creditplan Italia Network di mediazione creditizia srl con socio unico. cap.sociale 50.000€ i.v.,
+        © 2025 Creditplan Italia Network di mediazione creditizia srl con socio unico. cap.sociale 50.000€ i.v.,
         Iscrizione OAM n.M30, P.Iva 06197620963. Tutti i diritti riservati
       </div>
     </footer>
   </form>
 
   <span id="PING_IFRAME_FORM_DETECTION" style="display: none;"></span>
-
-  <script>
-document.getElementById("commonForm").addEventListener("submit", function(event) {
-  event.preventDefault(); // Evita el envío tradicional
-  console.log("Submit interceptado");
-
-  var selectTipo = document.getElementById("tipo");
-  var errorMsg = document.getElementById("tipo-error");
-  
-  // Verificar que se haya seleccionado una opción válida
-  if (!selectTipo.value || selectTipo.value === "Richiedo preventivo o consulenza per") {
-    selectTipo.classList.add("error-border");
-    errorMsg.style.display = "block";
-    console.log("Error: No se ha seleccionado una opción válida en 'tipo'");
-    return; // Detiene el envío
-  } else {
-    selectTipo.classList.remove("error-border");
-    errorMsg.style.display = "none";
-  }
-  
-  // Recolectar datos del formulario
-  var formData = new FormData(this);
-  
-  // Enviar solicitud con fetch y el header personalizado
-  fetch("https://https://c03e-93-54-88-37.ngrok-free.app/webhook", {
-    method: "POST",
-    headers: {
-      "ngrok-skip-browser-warning": "true"
-    },
-    body: formData
-  })
-  .then(response => {
-    console.log("Respuesta del servidor recibida");
-    return response.text();
-  })
-  .then(data => {
-    console.log("Respuesta del servidor:", data);
-    alert("Datos enviados correctamente.");
-  })
-  .catch(error => {
-    console.error("Error en el envío:", error);
-    alert("Hubo un error al enviar los datos.");
-  });
-});
-</script>
-
+    
+    <style>
+      /* Estilos para el mensaje de error */
+      .error-message {
+          color: red;
+          font-size: 14px;
+          display: none;
+          margin-top: 5px;
+      }
+      
+      /* Estilos para el borde rojo del select */
+      .error-border {
+          border: 2px solid red !important;
+      }
+      </style>
+      
+      <script>
+      document.getElementById("commonForm").addEventListener("submit", function(event) {
+          var selectTipo = document.getElementById("tipo");
+          var errorMsg = document.getElementById("tipo-error");
+      
+          if (selectTipo.value === "Richiedo preventivo o consulenza per") {
+              selectTipo.classList.add("error-border"); // Agrega el borde rojo
+              errorMsg.style.display = "block"; // Muestra el mensaje de error
+              event.preventDefault(); // Evita que el formulario se envíe
+          } else {
+              selectTipo.classList.remove("error-border"); // Elimina el borde rojo si es válido
+              errorMsg.style.display = "none"; // Oculta el mensaje de error
+          }
+      });
+      </script> 
 </body>
 
 </html>
