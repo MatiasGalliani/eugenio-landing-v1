@@ -617,6 +617,52 @@
   </form>
 
   <span id="PING_IFRAME_FORM_DETECTION" style="display: none;"></span>
+
+  <script>
+document.getElementById("commonForm").addEventListener("submit", function(event) {
+  event.preventDefault(); // Evita el envío tradicional
+  console.log("Submit interceptado");
+
+  var selectTipo = document.getElementById("tipo");
+  var errorMsg = document.getElementById("tipo-error");
+  
+  // Verificar que se haya seleccionado una opción válida
+  if (!selectTipo.value || selectTipo.value === "Richiedo preventivo o consulenza per") {
+    selectTipo.classList.add("error-border");
+    errorMsg.style.display = "block";
+    console.log("Error: No se ha seleccionado una opción válida en 'tipo'");
+    return; // Detiene el envío
+  } else {
+    selectTipo.classList.remove("error-border");
+    errorMsg.style.display = "none";
+  }
+  
+  // Recolectar datos del formulario
+  var formData = new FormData(this);
+  
+  // Enviar solicitud con fetch y el header personalizado
+  fetch("http://64.227.125.9/webhook", {
+    method: "POST",
+    headers: {
+      "ngrok-skip-browser-warning": "true"
+    },
+    body: formData
+  })
+  .then(response => {
+    console.log("Respuesta del servidor recibida");
+    return response.text();
+  })
+  .then(data => {
+    console.log("Respuesta del servidor:", data);
+    alert("Datos enviados correctamente.");
+  })
+  .catch(error => {
+    console.error("Error en el envío:", error);
+    alert("Hubo un error al enviar los datos.");
+  });
+});
+</script>
+
 </body>
 
 </html>
